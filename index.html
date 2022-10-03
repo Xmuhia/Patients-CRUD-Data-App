@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <title>Patients Data App</title>
+</head>
+<body>
+    <div class="container">
+        <!-- =====NAVBAR=====-->
+        <nav class="navigation active">
+            <div class="logo">
+                <img src="/Logo.png" alt="logo image">
+            </div>
+            <ul>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bx-plus-medical'></i></span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <span class="title">Patients</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bxs-calendar-plus'></i></span>
+                        <span class="title">Schedule</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bxs-hourglass'></i></span>
+                        <span class="title">On Call</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bxs-component'></i></span>
+                        <span class="title">Voice Coms.</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bx-edit'></i></span>
+                        <span class="title">Visits</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon"><i class='bx bxs-user-detail' ></i></span>
+                        <span class="title">Admin</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- =====FORM DASHBOARD=====-->
+        <div class="main maincol">
+            <form action="" id="patient-form" class="patient-row">
+                <div class="maincol-10">
+                    <label for="firstName">First Name</label>
+                    <input type="text" name="" id="firstName" class="form-control">
+                </div>
+                <div class="maincol-10">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" name="" id="lastName" class="form-control">
+                </div>
+                <div class="maincol-10">
+                    <label for="ins-number">Insurance No.</label>
+                    <input type="number" name="" id="ins-number" class="form-control">
+                </div>
+                <div class="maincol-10">
+                    <label>Choose your Gender: 
+                        <input list="browsers" id="gender" name="myBrowser" /></label>
+                        <datalist id="browsers">
+                          <option value="Male">
+                          <option value="Female">
+                          <option value="Rather not Say">
+                        </datalist>
+                </div>
+                <div class="maincol-10">
+                    <label for="dob"> Date of Birth</label>
+                    <input type="date" id="dob" name="meeting" min="1920-08-01" max="2022-08-31">
+                </div>
+                <div class="submit">
+                    <input type="submit" value="Submit" class="btn btn-success add-btn">
+                </div>
+                <div class="data-table">
+                    <table class="table-dark">
+                        <thead>
+                            <th class="first-cell">First Name</th>
+                            <th>Last Name</th>
+                            <th>DOB</th>
+                            <th>Gender</th>
+                            <th class="last-cell">Insurance</th>
+                        </thead>
+                        <tbody id="patient-list">
+                            <!-- <tr>
+                                <td>Dear</td>
+                                <td>Programmer</td>
+                                <td>25</td>
+                                <td>Male</td>
+                                <td>active</td>
+                                <td class="buttons">
+                                    <a href="#" class="edit edit-button"><i class='bx bxs-edit'></i>Edit</a>
+                                    <a href="#" class="delete delete-button"><i class='bx bxs-trash'></i>Delete</a>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="/script.js" ></script>
+</body>
+</html>
