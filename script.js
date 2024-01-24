@@ -1,108 +1,99 @@
+const patientForm = document.querySelector('#patient-form');
+const patientList = document.querySelector('#patient-list');
+const firstNameInput = document.querySelector('#firstName');
+const lastNameInput = document.querySelector('#lastName');
+const insNumberInput = document.querySelector('#ins-number');
+const genderInput = document.querySelector('#gender');
+const dobInput = document.querySelector('#dob');
+
 let selectedRow = null;
 
-// SHOW ALERTS
+// Show Alerts
 function showAlert(message, className) {
   const div = document.createElement('div');
   div.className = `alert alert-${className}`;
-
   div.appendChild(document.createTextNode(message));
+
   const container = document.querySelector('.container');
   const main = document.querySelector('.main');
   container.insertBefore(div, main);
 
-  setTimeout(() => document.querySelector('.alert').remove(), 3000)
+  setTimeout(() => div.remove(), 3000);
 }
 
-// CLEAR DATA
+// Clear Data
 function clearData() {
-  document.querySelector("#firstName").value = "";
-  document.querySelector("#lastName").value = "";
-  document.querySelector("#ins-number").value = "";
-  document.querySelector("#gender").value = "";
-  document.querySelector("#dob").value = "";
+  firstNameInput.value = '';
+  lastNameInput.value = '';
+  insNumberInput.value = '';
+  genderInput.value = '';
+  dobInput.value = '';
 }
 
-// ADD DATA
-document.querySelector('#patient-form').addEventListener('submit', (e) => {
-  e.preventDefault();
+// Add or Edit Data
+function addOrUpdateData() {
+  const firstName = firstNameInput.value;
+  const lastName = lastNameInput.value;
+  const insNumber = insNumberInput.value;
+  const gender = genderInput.value;
+  const dob = dobInput.value;
 
-  //GET FORM VALUE
-  const firstName = document.querySelector("#firstName").value;
-  const lastName = document.querySelector("#lastName").value;
-  const insNumber = document.querySelector("#ins-number").value;
-  const gender = document.querySelector("#gender").value;
-  const dob = document.querySelector("#dob").value;
-
-  //VALIDATE
-  if(firstName == "" || lastName == "" || insNumber == "" || gender == "" || dob == ""){
-    showAlert("Please Fill in all fields!", "danger")
-  }
-  else{
-    if(selectedRow == null){
-      const list = document.querySelector("#patient-list");
-
-      list.innerHTML += `
-      <tr>
-      <td>${firstName}</td>
-      <td>${lastName}</td>
-      <td>${dob}</td>
-       <td>${gender}</td>
-       <td>${insNumber}</td>
-
-       <td class="buttons">
-                                    <a href="#" class="edit edit-button"><i class='bx bxs-edit'></i>Edit</a>
-                                    <a href="#" class="delete delete-button"><i class='bx bxs-trash'></i>Delete</a>
-     </td>
-     <tr>
+  if (firstName === '' || lastName === '' || insNumber === '' || gender === '' || dob === '') {
+    showAlert('Please Fill in all fields!', 'danger');
+  } else {
+    if (selectedRow === null) {
+      // Add new row
+      const newRow = `
+        <tr>
+          <td>${firstName}</td>
+          <td>${lastName}</td>
+          <td>${dob}</td>
+          <td>${gender}</td>
+          <td>${insNumber}</td>
+          <td class="buttons">
+            <a href="#" class="edit edit-button"><i class='bx bxs-edit'></i>Edit</a>
+            <a href="#" class="delete delete-button"><i class='bx bxs-trash'></i>Delete</a>
+          </td>
+        </tr>
       `;
+
+      patientList.innerHTML += newRow;
       selectedRow = null;
       showAlert('Patient Added!', 'success');
-    }
-    else{
+    } else {
+      // Edit existing row
       selectedRow.children[0].textContent = firstName;
       selectedRow.children[1].textContent = lastName;
       selectedRow.children[2].textContent = dob;
       selectedRow.children[3].textContent = gender;
       selectedRow.children[4].textContent = insNumber;
       selectedRow = null;
-      showAlert('Patients Info Edited', 'success');
-   
+      showAlert('Patient Info Edited', 'success');
     }
-   clearData();
+
+    clearData();
   }
+}
+
+// Event listeners
+patientForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  addOrUpdateData();
 });
 
-// EDIT DATA
-document.querySelector('#patient-list').addEventListener('click', (e) => {
-  target = e.target;
-  if(target.classList.contains("edit")){
-    selectedRow = target.parentElement.parentElement;
-    document.querySelector('#firstName').value = selectedRow.children[0].textContent;
-    document.querySelector('#lastName').value = selectedRow.children[1].textContent;
-    document.querySelector('#dob').value = selectedRow.children[2].textContent;
-    document.querySelector('#gender').value = selectedRow.children[3].textContent;
-    document.querySelector('#insNumber').value = selectedRow.children[4].textContent;
-  }
-  if(target.classList.contains("bxs-edit")){
-    selectedRow = target.parentElement.parentElement.parentElement;
-    document.querySelector('#firstName').value = selectedRow.children[0].textContent;
-    document.querySelector('#lastName').value = selectedRow.children[1].textContent;
-    document.querySelector('#dob').value = selectedRow.children[2].textContent;
-    document.querySelector('#gender').value = selectedRow.children[3].textContent;
-    document.querySelector('#insNumber').value = selectedRow.children[4].textContent;
+patientList.addEventListener('click', (e) => {
+  const target = e.target;
+  if (target.classList.contains('edit') || target.classList.contains('bxs-edit')) {
+    selectedRow = target.closest('tr');
+    const [firstName, lastName, dob, gender, insNumber] = selectedRow.children;
+    firstNameInput.value = firstName.textContent;
+    lastNameInput.value = lastName.textContent;
+    dobInput.value = dob.textContent;
+    genderInput.value = gender.textContent;
+    insNumberInput.value = insNumber.textContent;
+  } else if (target.classList.contains('delete') || target.classList.contains('bxs-trash')) {
+    const rowToDelete = target.closest('tr');
+    rowToDelete.remove();
+    showAlert('Patient Data Deleted', 'danger');
   }
 });
- 
-
-// DELETE DATA
-document.querySelector("#patient-list").addEventListener('click', (e) => {
-  target = e.target;
-  if(target.classList.contains("delete")){
-    target.parentElement.parentElement.remove();
-    showAlert("Patients Data Deleted", "danger")
-  }
-  if(target.classList.contains("bxs-trash")){
-    target.parentElement.parentElement.parentElement.remove();
-    showAlert("Patients Data Deleted!", "danger")
-  }
- });
